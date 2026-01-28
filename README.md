@@ -1,3 +1,20 @@
+---
+title: DPR Simulator
+emoji: 🏛️
+colorFrom: blue
+colorTo: green
+sdk: gradio
+sdk_version: 6.4.0
+app_file: main.py
+pinned: false
+license: mit
+short_description: Simulate DPR process using AI agents
+tags:
+  - langchain
+  - dpr simulator
+  - ai
+  - experiment
+---
 # 🏛️ DPR Simulator
 
 **Simulasi berbasis AI untuk proses Dewan Perwakilan Rakyat (DPR) Indonesia**
