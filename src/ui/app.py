@@ -784,6 +784,35 @@ PIHAK YANG PERLU DILIBATKAN:
             inputs=[content, category, source, priority],
         )
 
+        # API Call Breakdown Section
+        with gr.Accordion("🔧 LLM API Call Breakdown (For Developers Only)", open=False):
+            gr.Markdown("""
+### How Many API Calls Happen?
+
+**Formula: Total API Calls = N + 2**
+
+Where **N** = sample size (number of DPR members processing the aspiration)
+
+**The 3 Stages:**
+1. **Menyerap (Absorb):** N API calls - each DPR member independently analyzes the aspiration
+2. **Menghimpun (Compile):** 1 API call - aggregates all responses into consensus
+3. **Menindaklanjuti (Follow-up):** 1 API call - creates concrete action plan
+
+**Examples Breakdown:**
+
+| Sample Size | Stage 1 Calls | Stage 2 Calls | Stage 3 Calls | **Total API Calls** |
+| ----------- | ------------- | ------------- | ------------- | ------------------- |
+| 20 members  | 20            | 1             | 1             | **22**              |
+| 50 members  | 50            | 1             | 1             | **52**              |
+| 100 members | 100           | 1             | 1             | **102**             |
+| 575 members | 575           | 1             | 1             | **577**             |
+
+**Key Points:**
+- Each DPR member is a truly independent AI agent with unique context (name, faction, province, expertise)
+- Stage 1 processes members in parallel batches of 10 for efficiency
+- All API costs are tracked and displayed in the results
+            """)
+
         # Footer info
         gr.Markdown("""
         ---
