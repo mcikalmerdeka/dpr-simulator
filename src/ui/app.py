@@ -378,7 +378,7 @@ def create_app() -> gr.Blocks:
                     label="OpenAI API Key",
                     placeholder="sk-...",
                     type="password",
-                    info="API key Anda tidak disimpan dan hanya digunakan untuk sesi ini",
+                    info="API key Anda tidak disimpan dan hanya digunakan untuk sesi ini. Silahkan buat di https://platform.openai.com/api-keys.",
                 )
 
                 with gr.Accordion("Pengaturan Simulasi", open=False):
