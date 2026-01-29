@@ -15,6 +15,7 @@ tags:
   - ai
   - experiment
 ---
+
 # 🏛️ DPR Simulator
 
 **Simulasi berbasis AI untuk proses Dewan Perwakilan Rakyat (DPR) Indonesia**
@@ -36,8 +37,10 @@ Proyek ini mensimulasikan 3 fungsi utama DPR dalam menangani aspirasi rakyat mel
 - **Simulasi Multi-Agent** - Setiap anggota DPR disimulasikan sebagai AI agent independen dengan karakteristik unik
 - **Pemrosesan Paralel dengan Batching** - Efisien memproses puluhan hingga ratusan agent secara bersamaan
 - **Pelacakan Biaya Real-time** - Monitoring biaya API OpenAI untuk setiap tahap pemrosesan
-- **Visualisasi Data Komprehensif** - Tabel interaktif menampilkan anggota DPR, relevansi, dan tanggapan
-- **Konfigurasi Fleksibel** - Pengaturan model, jumlah anggota, dan parameter lainnya melalui environment variables
+- **AI Council Personas** - Anggota DPR memiliki "jiwa" (persona) sesuai ideologi fraksi (Nasionalis, Agamis, Karya, dll) dan memberikan tanggapan lisan (quote) yang natural.
+- **Support 13 Komisi (2024-2029)** - Integrasi penuh dengan bidang tugas 13 Komisi DPR RI untuk filtering relevansi yang akurat.
+- **Visualisasi Data Komprehensif** - Tabel interaktif menampilkan anggota DPR, relevansi, sikap (sentiment), dan tanggapan lisan.
+- **Konfigurasi Fleksibel** - Pengaturan model, jumlah anggota, dan parameter lainnya melalui environment variables.
 
 ## 🚀 Instalasi dan Penggunaan
 
@@ -114,8 +117,8 @@ dpr-simulator/
 
 **Pengaturan Lainnya:** Dapat dikonfigurasi melalui environment variables (opsional):
 
-| Variable                   | Default          | Deskripsi                             |
-| -------------------------- | ---------------- | ------------------------------------- |
+| Variable                 | Default        | Deskripsi                             |
+| ------------------------ | -------------- | ------------------------------------- |
 | `OPENAI_MODEL`           | `gpt-4.1-nano` | Model OpenAI yang digunakan           |
 | `PROMPT_COST_PER_1K`     | `0.0001`       | Biaya per 1k prompt tokens (USD)      |
 | `COMPLETION_COST_PER_1K` | `0.0004`       | Biaya per 1k completion tokens (USD)  |
@@ -246,9 +249,12 @@ sequenceDiagram
 - Setiap anggota DPR (AI agent) menganalisis aspirasi dari perspektif mereka
 - Sistem memfilter anggota yang relevan berdasarkan keahlian dan daerah pemilihan
 - Pemrosesan paralel dalam batch (default: 10 anggota per batch)
-- Menentukan tingkat relevansi: Tinggi/Sedang/Rendah
+- Menentukan tingkat relevansi: Tinggi/Sedang/Rendah (Prioritas: Komisi > Dapil)
 - Mengidentifikasi poin-poin kunci dan memberikan rekomendasi awal
-- **Output:** `AbsorpsiResponse` untuk setiap anggota (relevansi, alasan, poin kunci, rekomendasi)
+- **Menghasilkan Output Persona:**
+  - **Sikap (Sentiment):** Positif/Negatif/Netral/Kritis
+  - **Tanggapan Lisan (Quote):** Statement politik sesuai gaya fraksi
+- **Output:** `AbsorpsiResponse` untuk setiap anggota
 
 ### 2. Tahap Kompilasi (Menghimpun)
 
