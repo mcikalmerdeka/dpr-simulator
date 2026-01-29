@@ -17,6 +17,8 @@ class AbsorpsiResponse(BaseModel):
     alasan_relevansi: str = Field(..., description="Explanation of relevance")
     poin_kunci: List[str] = Field(default_factory=list, description="Key points identified")
     rekomendasi_awal: str = Field(default="", description="Initial recommendation")
+    sentiment: str = Field(default="Netral", description="Member's stance: Positif/Negatif/Kritis/Netral")
+    quote: str = Field(default="", description="Direct verbal statement/opinion from the member")
     error: Optional[str] = Field(default=None, description="Error message if any")
     cost_usd: float = Field(default=0.0, description="Cost of this API call in USD")
 
@@ -75,6 +77,8 @@ class SimulationDetails(BaseModel):
     anggota_relevansi_rendah: int = Field(default=0, description="Members with low relevance")
     fraksi_terwakili: List[str] = Field(default_factory=list, description="Factions represented")
     provinsi_terwakili: List[str] = Field(default_factory=list, description="Provinces represented")
+    komisi_terwakili: List[str] = Field(default_factory=list, description="Commissions represented")
+    komisi_utama: str = Field(default="", description="Primary responsible commission")
     # IDs for building dataframes in UI
     relevant_member_ids: List[int] = Field(default_factory=list, description="IDs of relevant members")
 

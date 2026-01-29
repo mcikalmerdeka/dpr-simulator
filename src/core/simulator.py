@@ -85,6 +85,7 @@ class DPRSimulator:
         self,
         aspirasi: Aspirasi,
         sample_size: int = None,
+        komisi_filter: Optional[str] = None,
         progress_callback: Optional[Callable[[str], None]] = None,
     ) -> PipelineResult:
         """
@@ -93,6 +94,7 @@ class DPRSimulator:
         Args:
             aspirasi: The aspiration to process
             sample_size: Number of members to sample (defaults to settings)
+            komisi_filter: Optional specific commission to filter by
             progress_callback: Optional callback for progress updates
 
         Returns:
@@ -110,7 +112,7 @@ class DPRSimulator:
 
         # Get relevant members
         relevant_members = DPRMemberFactory.get_relevant_members(
-            self.members, aspirasi.category, aspirasi.source, sample_size
+            self.members, aspirasi.category, aspirasi.source, komisi_filter, sample_size
         )
         log(f"📋 Ditemukan {len(relevant_members)} anggota relevan")
 
@@ -163,6 +165,11 @@ class DPRSimulator:
         # Get unique factions and provinces from relevant members
         fraksi_set = set(m.faction for m in relevant_members)
         provinsi_set = set(m.province for m in relevant_members)
+        komisi_set = set(m.komisi for m in relevant_members)
+
+        # Get primary commission
+        from .komisi_data import get_primary_komisi
+        komisi_utama = komisi_filter if komisi_filter else get_primary_komisi(aspirasi.category)
 
         simulation_details = SimulationDetails(
             total_anggota_dpr=len(self.members),
@@ -174,6 +181,8 @@ class DPRSimulator:
             anggota_relevansi_rendah=relevansi_rendah,
             fraksi_terwakili=sorted(list(fraksi_set)),
             provinsi_terwakili=sorted(list(provinsi_set)),
+            komisi_terwakili=sorted(list(komisi_set)),
+            komisi_utama=komisi_utama,
             relevant_member_ids=[m.id for m in relevant_members],
         )
 

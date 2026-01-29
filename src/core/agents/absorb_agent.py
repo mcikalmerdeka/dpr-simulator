@@ -9,6 +9,8 @@ from .base import BaseAgent
 from ...models import DPRMember, Aspirasi, AbsorpsiResponse
 
 
+from ..faction_data import get_faction_persona
+
 class AbsorbAgent(BaseAgent):
     """
     Agent for Step 1: Menyerap (Absorb)
@@ -18,29 +20,51 @@ class AbsorbAgent(BaseAgent):
 
     def get_system_prompt(self) -> str:
         return """Anda adalah seorang anggota DPR RI yang bertugas menyerap dan menganalisis aspirasi rakyat.
+
+Panduan Penilaian Relevansi:
+1. **PRIORITAS UTAMA (Fungsional)**: Jika aspirasi berkaitan dengan ruang lingkup KOMISI Anda, anggaplah RELEVANSI TINGGI meskipun bukan dari Dapil Anda. Anda bertanggung jawab secara nasional untuk bidang tersebut.
+2. **PRIORITAS KEDUA (Representasi)**: Jika aspirasi berasal dari DAPIL Anda, itu juga RELEVAN.
+
 Tugas Anda adalah:
-1. Memahami dan menganalisis aspirasi dari perspektif daerah pemilihan Anda
-2. Menentukan relevansi aspirasi dengan konstituensi Anda
-3. Mengidentifikasi poin-poin kunci yang perlu ditindaklanjuti
+1. Memahami aspirasi dari kacamata Ideologi Fraksi dan Kepentingan Dapil/Komisi Anda.
+2. Menentukan relevansi (Tinggi/Sedang/Rendah) sesuai panduan.
+3. Memberikan **TANGGAPAN LISAN (Quote)** yang mencerminkan persona politik Anda.
 
 Selalu berikan respons dalam format JSON yang valid."""
 
     def _build_user_prompt(self, member: DPRMember, aspirasi: Aspirasi) -> str:
-        return f"""Anda adalah anggota DPR RI:
+        ideologi = get_faction_persona(member.faction)
+        
+        return f"""Anda adalah anggota DPR RI dengan profil:
 {member.to_prompt_context()}
+Ideologi/Gaya Politik Fraksi ({member.faction}): {ideologi}
 
 Aspirasi rakyat yang masuk:
 {aspirasi.to_prompt_context()}
 
+Panduan Penilaian Relevansi:
+1. **CEK KOMISI**: Apakah topik aspirasi ini masuk lingkup Komisi Anda? Jika YA -> Relevansi TINGGI (Anda membahas kebijakan nasionalnya).
+2. **CEK DAPIL**: Apakah lokasi aspirasi ini di Dapil Anda? Jika YA -> Relevansi TINGGI (Anda mewakili konstituen tersebut).
+3. Jika TIDAK keduanya -> Relevansi RENDAH.
+4. **PENTING**: JANGAN menolak atau memberi relevansi Rendah hanya karena aspirasi bukan dari Dapil Anda, JIKA aspirasi tersebut masuk dalam wewenang Komisi Anda.
+
 Tugas Anda:
-1. Pahami dan analisis aspirasi ini dari perspektif daerah pemilihan Anda
-2. Tentukan apakah aspirasi ini relevan dengan konstituensi Anda
-3. Identifikasi poin-poin kunci yang perlu ditindaklanjuti
+1. Analisis aspirasi ini.
+2. Tentukan relevansi (Tinggi/Sedang/Rendah).
+3. Buat **QUOTE (Tanggapan Lisan)**:
+   - Gunakan gaya bicara politisi sesuai fraksi Anda ({member.faction}).
+   - Jika PKS/PPP/PKB: Boleh gunakan istilah agamis/kerakyatan/pesantren jika relevan.
+   - Jika PDIP/Gerindra: Gunakan nada nasionalis/tegas/wong cilik.
+   - Jika Golkar/PAN/Demokrat: Gunakan nada teknokratis/pembangunan/solutif.
+   - **PENTING**: Quote harus terdengar natural, seperti diwawancara wartawan atau berbicara di sidang paripurna. JANGAN KAKU.
+4. Tentukan **SENTIMENT** (Positif/Negatif/Netral/Kritis) terhadap isu ini.
 
 Berikan respons dalam format JSON:
 {{
     "relevansi": "Tinggi/Sedang/Rendah",
-    "alasan_relevansi": "penjelasan singkat",
+    "alasan_relevansi": "penjelasan singkat teknis (untuk internal)",
+    "sentiment": "Positif/Negatif/Netral/Kritis",
+    "quote": "Tanggapan lisan Anda di sini...",
     "poin_kunci": ["poin1", "poin2", ...],
     "rekomendasi_awal": "saran tindak lanjut"
 }}"""
@@ -92,6 +116,8 @@ Berikan respons dalam format JSON:
                 aspirasi_id=aspirasi.id,
                 relevansi=result.get("relevansi", "rendah"),
                 alasan_relevansi=result.get("alasan_relevansi", ""),
+                sentiment=result.get("sentiment", "Netral"),
+                quote=result.get("quote", ""),
                 poin_kunci=result.get("poin_kunci", []),
                 rekomendasi_awal=result.get("rekomendasi_awal", ""),
                 cost_usd=cost,
@@ -103,6 +129,8 @@ Berikan respons dalam format JSON:
                 aspirasi_id=aspirasi.id,
                 relevansi="rendah",
                 alasan_relevansi="",
+                sentiment="Netral",
+                quote="",
                 poin_kunci=[],
                 rekomendasi_awal="",
                 error=str(e),

@@ -1,7 +1,8 @@
 """Factory for creating DPR members."""
 
-from typing import List
+from typing import List, Optional
 from ..models import DPRMember
+from .komisi_data import KOMISI_LIST, get_relevant_komisi
 
 
 class DPRMemberFactory:
@@ -50,6 +51,7 @@ class DPRMemberFactory:
                 id=i + 1,
                 name=f"Anggota_DPR_{i + 1}",
                 faction=cls.FACTIONS[i % len(cls.FACTIONS)],
+                komisi=KOMISI_LIST[i % len(KOMISI_LIST)],
                 dapil=f"Dapil_{(i % 10) + 1}",
                 province=cls.PROVINCES[i % len(cls.PROVINCES)],
                 expertise=[
@@ -66,22 +68,44 @@ class DPRMemberFactory:
         members: List[DPRMember],
         category: str,
         source: str,
+        komisi_filter: Optional[str] = None,
         limit: int = 50,
     ) -> List[DPRMember]:
         """
         Filter members relevant to a specific aspiration.
+        
+        Priority:
+        1. Members in the relevant Commission (Komisi)
+        2. Members from the same Province (Dapil)
 
         Args:
             members: List of all DPR members
             category: Category of the aspiration
             source: Source region of the aspiration
+            komisi_filter: Optional explicit commission filter
             limit: Maximum number of members to return
 
         Returns:
             List of relevant DPRMember instances
         """
-        relevant = [
-            m for m in members
-            if category in m.expertise or m.province in source
-        ]
+        # Determine target commissions
+        if komisi_filter:
+            target_komisi = [komisi_filter]
+        else:
+            target_komisi = get_relevant_komisi(category)
+
+        # Filter by Komisi (Primary Filter)
+        relevant = [m for m in members if m.komisi in target_komisi]
+        
+        # If explicit commission filter is used but yields no results (unlikely given distribution),
+        # or if category mapping fails, fallback to something reasonable or keep empty
+        if not relevant and not komisi_filter:
+            # Fallback: Filter by expertise if no commission match found (shouldn't happen with full mapping)
+            relevant = [m for m in members if category in m.expertise]
+
+        # Sorting: Prioritize members from the source province within the relevant commission
+        # This reflects that a member in the right commission who is ALSO from the area 
+        # would be most interested/relevant.
+        relevant.sort(key=lambda m: 0 if m.province in source else 1)
+
         return relevant[:limit]
