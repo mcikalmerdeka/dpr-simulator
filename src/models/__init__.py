@@ -1,4 +1,4 @@
-"""Data models for DPR Simulator."""
+"""Data models for DPR AI Simulator."""
 
 from .dpr_member import DPRMember
 from .aspirasi import Aspirasi

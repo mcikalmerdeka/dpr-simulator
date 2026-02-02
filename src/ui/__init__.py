@@ -1,4 +1,4 @@
-"""UI module for DPR Simulator."""
+"""UI module for DPR AI Simulator."""
 
 from .app import create_app, launch_app
 

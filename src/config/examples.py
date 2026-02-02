@@ -1,5 +1,5 @@
 """
-Example aspirations for the DPR Simulator UI.
+Example aspirations for the DPR AI Simulator UI.
 """
 
 ASPIRATION_1 = """Pendidikan Digital di Daerah Terpencil di Desa Cikadu, Cianjur Selatan, Jawa Barat

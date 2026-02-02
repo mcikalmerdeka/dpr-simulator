@@ -1,4 +1,4 @@
-"""Response models for DPR Simulator pipeline stages."""
+"""Response models for DPR AI Simulator pipeline stages."""
 
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -84,7 +84,7 @@ class SimulationDetails(BaseModel):
 
 
 class PipelineResult(BaseModel):
-    """Complete result from the DPR Simulator pipeline."""
+    """Complete result from the DPR AI Simulator pipeline."""
 
     aspirasi: Aspirasi = Field(..., description="The processed aspiration")
     tanggapan_anggota: List[AbsorpsiResponse] = Field(

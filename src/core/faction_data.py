@@ -1,5 +1,5 @@
 """
-Faction (Fraksi) data and ideology mapping for DPR Simulator.
+Faction (Fraksi) data and ideology mapping for DPR AI Simulator.
 """
 
 from typing import Dict

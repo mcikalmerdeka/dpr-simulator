@@ -1,5 +1,5 @@
 ---
-title: DPR Simulator
+title: DPR AI Simulator
 emoji: 🏛️
 colorFrom: blue
 colorTo: green
@@ -16,7 +16,7 @@ tags:
   - experiment
 ---
 
-# 🏛️ DPR Simulator
+# 🏛️ DPR AI Simulator
 
 **Simulasi berbasis AI untuk proses Dewan Perwakilan Rakyat (DPR) Indonesia**
 

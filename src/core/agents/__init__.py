@@ -1,4 +1,4 @@
-"""LangChain agents for DPR Simulator pipeline stages."""
+"""LangChain agents for DPR AI Simulator pipeline stages."""
 
 from .absorb_agent import AbsorbAgent
 from .compile_agent import CompileAgent

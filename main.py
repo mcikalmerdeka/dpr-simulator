@@ -1,11 +1,11 @@
-"""DPR Simulator - Main entry point."""
+"""DPR AI Simulator - Main entry point."""
 
 from src.ui import launch_app
 
 
 def main():
-    """Launch the DPR Simulator application."""
-    print("🏛️ Starting DPR Simulator...")
+    """Launch the DPR AI Simulator application."""
+    print("🏛️ Starting DPR AI Simulator...")
     print("=" * 50)
     print("Simulasi AI untuk Menyerap, Menghimpun, dan")
     print("Menindaklanjuti Aspirasi Rakyat Indonesia")

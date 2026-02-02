@@ -1,4 +1,4 @@
-"""Configuration module for DPR Simulator."""
+"""Configuration module for DPR AI Simulator."""
 
 from .settings import settings
 

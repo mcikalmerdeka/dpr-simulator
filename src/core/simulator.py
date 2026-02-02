@@ -1,4 +1,4 @@
-"""Main DPR Simulator class orchestrating the pipeline."""
+"""Main DPR AI Simulator class orchestrating the pipeline."""
 
 import asyncio
 from typing import List, Optional, Callable
@@ -34,7 +34,7 @@ class DPRSimulator:
         model: Optional[str] = None,
     ):
         """
-        Initialize the DPR Simulator.
+        Initialize the DPR AI Simulator.
 
         Args:
             api_key: OpenAI API key (defaults to settings)

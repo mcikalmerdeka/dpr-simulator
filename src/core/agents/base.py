@@ -1,4 +1,4 @@
-"""Base agent class for DPR Simulator."""
+"""Base agent class for DPR AI Simulator."""
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict
@@ -11,7 +11,7 @@ from ...config import settings
 
 
 class BaseAgent(ABC):
-    """Abstract base class for DPR Simulator agents."""
+    """Abstract base class for DPR AI Simulator agents."""
 
     def __init__(
         self,

@@ -1,4 +1,4 @@
-"""Gradio UI for DPR Simulator."""
+"""Gradio UI for DPR AI Simulator."""
 
 import asyncio
 import json
@@ -377,12 +377,12 @@ def create_app() -> gr.Blocks:
         button_primary_background_fill_hover="#dd6b20",
     )
 
-    with gr.Blocks(title="DPR Simulator - AI Parliament") as app:
+    with gr.Blocks(title="DPR AI Simulator - AI Parliament") as app:
 
         # Header
         gr.HTML("""
         <div class="main-header">
-            <h1>🏛️ DPR Simulator</h1>
+            <h1>🏛️ DPR AI Simulator</h1>
             <p>Simulasi AI untuk Menyerap, Menghimpun, dan Menindaklanjuti Aspirasi Rakyat</p>
         </div>
         """)
@@ -582,7 +582,7 @@ Where **N** = sample size (number of DPR members processing the aspiration)
         ---
         <center>
         <small>
-        💡 <b>Tentang DPR Simulator:</b> Aplikasi ini mensimulasikan bagaimana AI dapat menggantikan fungsi DPR
+        💡 <b>Tentang DPR AI Simulator:</b> Aplikasi ini mensimulasikan bagaimana AI dapat menggantikan fungsi DPR
         dalam menyerap, menghimpun, dan menindaklanjuti aspirasi rakyat dengan biaya yang jauh lebih efisien.
         </small>
         </center>
